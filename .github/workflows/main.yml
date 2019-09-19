@@ -10,4 +10,4 @@ jobs:
     - name: Scan image with Anchore Engine
       uses: btodhunter/actions-test/.github/actions/anchore-action@master
       with:
-        full-image-tag: localbuild/testimage:latest
+        full-image-tag: "localbuild/testimage:latest"
