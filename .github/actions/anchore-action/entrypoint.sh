@@ -33,7 +33,7 @@ if [[ ! $(curl --silent "${ANCHORE_ENDPOINT_HOSTNAME}:5000") ]]; then
     sleep 3 && curl --silent --retry 3 "${ANCHORE_ENDPOINT_HOSTNAME}:5000" && printf '%s\n' "Docker registry started successfully!"
 fi
 
-skopeo copy "docker-daemon://${IMAGE_NAME}" "docker-archive:/anchore-engine/${IMAGE_NAME}"
+skopeo copy "docker-daemon:${IMAGE_NAME}" "docker-archive:/anchore-engine/${IMAGE_NAME}"
 
 echo "Waiting for Anchore Engine to be available."
 # pass python script to background process & wait, required to handle keyboard interrupt when running container non-interactively.
