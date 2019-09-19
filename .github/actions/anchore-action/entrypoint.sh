@@ -1,7 +1,6 @@
-#!/bin/sh -l
+#!/bin/bash
 
-sh -c "docker inspect $*"
-
+ls -lL /var/run
 # IMAGE_NAME="$1"
 
 # export POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-mysecretpassword}"
