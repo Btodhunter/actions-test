@@ -7,6 +7,6 @@ RUN groupadd -g 115 docker; \
 
 COPY entrypoint.sh /entrypoint.sh
 
-USER anchore:anchore
+# USER anchore:anchore
 
 ENTRYPOINT ["/entrypoint.sh"]
