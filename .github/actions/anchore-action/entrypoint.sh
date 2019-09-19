@@ -2,6 +2,8 @@
 
 IMAGE_NAME="$1"
 
+ls -lL /var/run
+
 export POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-mysecretpassword}"
 export ANCHORE_DB_PASSWORD="${POSTGRES_PASSWORD}"
 export ANCHORE_DB_USER="${POSTGRES_USER}"
