@@ -2,8 +2,6 @@
 
 IMAGE_NAME="$1"
 
-ls -lL /var/run
-
 export POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-mysecretpassword}"
 export ANCHORE_DB_PASSWORD="${POSTGRES_PASSWORD}"
 export ANCHORE_DB_USER="${POSTGRES_USER}"
@@ -20,18 +18,18 @@ fi
 
 if [[ ! $(pgrep anchore-manager) ]]; then
     echo "Starting Anchore Engine"
-    nohup anchore-manager service start --all &> /var/log/anchore.log &
+    gosu anchore:anchore bash -c 'nohup anchore-manager service start --all &> /var/log/anchore.log &'
 fi
     
 if [[ ! $(pg_isready -d postgres --quiet) ]]; then
     printf '%s' "Starting Postgresql... "
-    nohup bash -c 'postgres &> /var/log/postgres.log &' &> /dev/null
+    gosu anchore:anchore bash -c 'nohup postgres &> /var/log/postgres.log &' &> /dev/null
     sleep 3 && pg_isready -d postgres --quiet && printf '%s\n' "Postgresql started successfully!"
 fi
 
 if [[ ! $(curl --silent "${ANCHORE_ENDPOINT_HOSTNAME}:5000") ]]; then
     printf '%s' "Starting Docker registry... "
-    nohup registry serve /etc/docker/registry/config.yml &> /var/log/registry.log &
+    gosu anchore:anchore bash -c 'nohup registry serve /etc/docker/registry/config.yml &> /var/log/registry.log &'
     sleep 3 && curl --silent --retry 3 "${ANCHORE_ENDPOINT_HOSTNAME}:5000" && printf '%s\n' "Docker registry started successfully!"
 fi
 
