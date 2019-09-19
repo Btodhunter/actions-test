@@ -1,0 +1,14 @@
+name: 'Anchore Inline Scan'
+description: 'Container static analysis and policy-based compliance tool'
+branding:
+  icon: 'anchor'
+  color: 'blue'
+inputs:
+  full-image-tag:
+    description: 'Full image tag (ex. anchore/anchore-engine:latest)'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.full-image-tag }}
